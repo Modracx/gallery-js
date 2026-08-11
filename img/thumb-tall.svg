@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="640" viewBox="0 0 400 640">
+<rect width="400" height="640" fill="#243447"/>
+<circle cx="288" cy="192" r="64" fill="#64748b" opacity="0.55"/>
+<rect x="0" y="435" width="400" height="205" fill="#64748b" opacity="0.22"/>
+<text x="200" y="320" font-family="system-ui,sans-serif" font-size="64"
+ font-weight="700" fill="#fff" text-anchor="middle" dominant-baseline="middle">Tall</text>
+<text x="200" y="380" font-family="ui-monospace,monospace" font-size="28"
+ fill="#fff" opacity="0.75" text-anchor="middle" dominant-baseline="middle">thumb · 400×640</text>
+</svg>

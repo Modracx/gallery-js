@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100">
+<rect width="1600" height="1100" fill="#5c1d2e"/>
+<circle cx="1152" cy="330" r="176" fill="#ef4444" opacity="0.55"/>
+<rect x="0" y="748" width="1600" height="352" fill="#ef4444" opacity="0.22"/>
+<text x="800" y="550" font-family="system-ui,sans-serif" font-size="176"
+ font-weight="700" fill="#fff" text-anchor="middle" dominant-baseline="middle">Crimson</text>
+<text x="800" y="715" font-family="ui-monospace,monospace" font-size="77"
+ fill="#fff" opacity="0.75" text-anchor="middle" dominant-baseline="middle">full 5 · 1600×1100</text>
+</svg>

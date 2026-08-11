@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>gallery-js — jQuery test runner</title>
+    <style>
+      :root {
+        --bg: #12141a; --panel: #1b1e27; --line: #2c3040;
+        --text: #e8eaf0; --muted: #949bb0; --accent: #00a8ff;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; padding: 32px 24px 80px;
+        background: var(--bg); color: var(--text);
+        font: 15px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      }
+      h1 { font-size: 22px; margin: 0 0 4px; }
+      h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .08em;
+           color: var(--muted); margin: 40px 0 12px; font-weight: 600; }
+      .sub { color: var(--muted); margin: 0 0 8px; }
+      .wrap { max-width: 900px; margin: 0 auto; }
+      .note { color: var(--muted); font-size: 13px; margin: 8px 0 0; }
+      code { color: var(--accent); }
+      .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+      button {
+        background: #232734; color: var(--text); border: 1px solid var(--line);
+        border-radius: 7px; padding: 7px 13px; font: inherit; font-size: 13px;
+        cursor: pointer;
+      }
+      button:hover { border-color: var(--accent); }
+      .readout { margin-top: 10px; color: var(--muted);
+                 font: 12px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; }
+      figure { margin: 0; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>gallery-js — jQuery build</h1>
+      <p class="sub">Registers <code>$.fn.Gallery</code>. Same engine as the vanilla build.</p>
+
+      <h2>1 · Auto grid, square crop, lightbox</h2>
+      <div id="grid">
+        <a href="/img/full-1.svg" data-caption="A wide blue field"><img src="/img/thumb-1.svg" alt="Blue" /></a>
+        <a href="/img/full-2.svg" data-caption="Green terraces at dusk"><img src="/img/thumb-2.svg" alt="Green" /></a>
+        <a href="/img/full-3.svg" data-caption="Amber light on stone"><img src="/img/thumb-3.svg" alt="Amber" /></a>
+        <a href="/img/full-4.svg" data-caption="Violet dunes"><img src="/img/thumb-4.svg" alt="Violet" /></a>
+        <a href="/img/full-5.svg" data-caption="Crimson shorelines"><img src="/img/thumb-5.svg" alt="Crimson" /></a>
+        <a href="/img/full-6.svg" data-caption="Teal shallows"><img src="/img/thumb-6.svg" alt="Teal" /></a>
+      </div>
+      <p class="note">
+        Click, or tab to a thumbnail and press Enter. In the viewer: arrows,
+        Home/End, Escape, double-click or wheel to zoom, drag to pan, swipe
+        down to dismiss.
+      </p>
+
+      <h2>2 · Fixed columns, natural proportions, thumbnails strip</h2>
+      <div id="natural">
+        <a href="/img/full-1.svg"><img src="/img/thumb-1.svg" alt="One" /></a>
+        <a href="/img/full-3.svg"><img src="/img/thumb-3.svg" alt="Three" /></a>
+        <a href="/img/full-5.svg"><img src="/img/thumb-5.svg" alt="Five" /></a>
+      </div>
+
+      <h2>3 · Masonry</h2>
+      <div id="masonry">
+        <a href="/img/full-2.svg"><img src="/img/thumb-tall.svg" alt="Tall" /></a>
+        <a href="/img/full-4.svg"><img src="/img/thumb-4.svg" alt="Short" /></a>
+        <a href="/img/full-6.svg"><img src="/img/thumb-tall.svg" alt="Tall two" /></a>
+        <a href="/img/full-1.svg"><img src="/img/thumb-1.svg" alt="Short two" /></a>
+      </div>
+
+      <h2>4 · Figures with figcaption as the caption source</h2>
+      <div id="figures">
+        <figure>
+          <a href="/img/full-2.svg"><img src="/img/thumb-2.svg" alt="" /></a>
+          <figcaption>Caption read straight from the figcaption element</figcaption>
+        </figure>
+        <figure>
+          <a href="/img/full-6.svg"><img src="/img/thumb-6.svg" alt="" /></a>
+          <figcaption>Second figure, second caption</figcaption>
+        </figure>
+      </div>
+
+      <h2>5 · Auto-init from data attributes — no JS call</h2>
+      <div
+        data-gallery
+        data-gallery-columns="4"
+        data-gallery-gap="8"
+        data-gallery-aspect-ratio="1"
+        data-gallery-thumbnails
+      >
+        <a href="/img/full-1.svg" data-caption="Declarative one"><img src="/img/thumb-1.svg" alt="1" /></a>
+        <a href="/img/full-2.svg" data-caption="Declarative two"><img src="/img/thumb-2.svg" alt="2" /></a>
+        <a href="/img/full-3.svg" data-caption="Declarative three"><img src="/img/thumb-3.svg" alt="3" /></a>
+        <a href="/img/full-4.svg" data-caption="Declarative four"><img src="/img/thumb-4.svg" alt="4" /></a>
+      </div>
+
+      <h2>6 · Live API</h2>
+      <div class="controls">
+        <button data-act="open">open(0)</button>
+        <button data-act="open3">open(3)</button>
+        <button data-act="next">next</button>
+        <button data-act="prev">prev</button>
+        <button data-act="close">close</button>
+        <button data-act="add">add thumbnail</button>
+        <button data-act="destroy">destroy</button>
+        <button data-act="rebuild">rebuild</button>
+      </div>
+      <div class="readout" id="readout">—</div>
+      <div id="playground" style="margin-top:10px">
+        <a href="/img/full-1.svg" data-caption="Playground A"><img src="/img/thumb-1.svg" alt="A" /></a>
+        <a href="/img/full-3.svg" data-caption="Playground B"><img src="/img/thumb-3.svg" alt="B" /></a>
+        <a href="/img/full-5.svg" data-caption="Playground C"><img src="/img/thumb-5.svg" alt="C" /></a>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="gallery-jquery.js"></script>
+    <script>
+      $(function () {
+        $("#grid").Gallery("create", {
+          columns: "auto", minColumnWidth: 170, aspectRatio: 1, gap: 10,
+        });
+        $("#natural").Gallery("create", {
+          columns: 3, aspectRatio: null, gap: 12, thumbnails: true,
+        });
+        $("#masonry").Gallery("create", { layout: "masonry", columns: 3, gap: 10 });
+        $("#figures").Gallery("create", { columns: 2, gap: 14, aspectRatio: 16 / 9 });
+
+        /* ---- section 6 ---- */
+        const $stage = $("#playground");
+        const SRC = ["1", "2", "3", "4", "5", "6"];
+        let added = 0;
+
+        function build() {
+          $stage.Gallery("create", { columns: 3, gap: 10, aspectRatio: 1 });
+        }
+        build();
+
+        $(".controls").on("click", "button", function () {
+          const act = this.dataset.act;
+          if (act === "rebuild") return build();
+          if (act === "destroy") return $stage.Gallery("destroy");
+          if (!$stage.Gallery("get")) return;
+
+          if (act === "open") $stage.Gallery("open", 0);
+          if (act === "open3") $stage.Gallery("open", 3);
+          if (act === "next") $stage.Gallery("next");
+          if (act === "prev") $stage.Gallery("prev");
+          if (act === "close") $stage.Gallery("close");
+          if (act === "add") {
+            const n = SRC[added++ % SRC.length];
+            $("<a>")
+              .attr("href", "/img/full-" + n + ".svg")
+              .attr("data-caption", "Added at runtime")
+              .html('<img src="/img/thumb-' + n + '.svg" alt="Added">')
+              .appendTo($stage);
+            $stage.Gallery("update");
+          }
+        });
+
+        setInterval(function () {
+          $("#readout").text(
+            $stage.Gallery("get")
+              ? "items: " + $stage.Gallery("length") +
+                "   open: " + $stage.Gallery("isOpen") +
+                "   index: " + $stage.Gallery("index")
+              : "destroyed — press rebuild"
+          );
+        }, 150);
+      });
+    </script>
+  </body>
+</html>
