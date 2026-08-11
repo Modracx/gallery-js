@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>@modracx/gallery-js — ES module demo</title>
+<style>
+ :root{--bg:#12141a;--panel:#1b1e27;--line:#2c3040;--text:#e8eaf0;--muted:#949bb0;--accent:#00a8ff}
+ *{box-sizing:border-box}
+ body{margin:0;padding:32px 24px 60px;background:var(--bg);color:var(--text);
+      font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+ .wrap{max-width:860px;margin:0 auto}
+ h1{font-size:22px;margin:0 0 4px}
+ h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:34px 0 10px;font-weight:600}
+ .sub{color:var(--muted);margin:0 0 8px}
+ code{color:var(--accent)}
+ .controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+ button{background:#232734;color:var(--text);border:1px solid var(--line);border-radius:7px;
+        padding:7px 13px;font:inherit;font-size:13px;cursor:pointer}
+ button:hover{border-color:var(--accent)}
+ .readout{margin-top:10px;color:var(--muted);font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace}
+</style></head><body>
+ <div class="wrap">
+  <h1>@modracx/gallery-js</h1>
+  <p class="sub">ES module demo — imports straight from <code>../src/index.js</code>. Serve over HTTP.</p>
+
+  <h2>Grid + lightbox</h2>
+  <div id="grid">
+    <a href="/img/full-1.svg" data-caption="Blue field"><img src="/img/thumb-1.svg" alt="Blue"></a>
+    <a href="/img/full-2.svg" data-caption="Green terraces"><img src="/img/thumb-2.svg" alt="Green"></a>
+    <a href="/img/full-3.svg" data-caption="Amber stone"><img src="/img/thumb-3.svg" alt="Amber"></a>
+    <a href="/img/full-4.svg" data-caption="Violet dunes"><img src="/img/thumb-4.svg" alt="Violet"></a>
+  </div>
+
+  <h2>Lightbox with no grid — your own CSS, our viewer</h2>
+  <div id="bare" style="display:flex;gap:10px;flex-wrap:wrap">
+    <a href="/img/full-5.svg" data-caption="Crimson"><img src="/img/thumb-5.svg" alt="Crimson" style="width:150px;border-radius:8px"></a>
+    <a href="/img/full-6.svg" data-caption="Teal"><img src="/img/thumb-6.svg" alt="Teal" style="width:150px;border-radius:8px"></a>
+  </div>
+
+  <h2>Declarative — autoInit()</h2>
+  <div data-gallery data-gallery-columns="3" data-gallery-aspect-ratio="1" data-gallery-gap="8">
+    <a href="/img/full-2.svg" data-caption="Declarative one"><img src="/img/thumb-2.svg" alt="1"></a>
+    <a href="/img/full-4.svg" data-caption="Declarative two"><img src="/img/thumb-4.svg" alt="2"></a>
+    <a href="/img/full-6.svg" data-caption="Declarative three"><img src="/img/thumb-6.svg" alt="3"></a>
+  </div>
+
+  <h2>Controller API</h2>
+  <div class="controls">
+    <button id="open">open(0)</button>
+    <button id="next">next</button>
+    <button id="close">close</button>
+    <button id="destroy">destroy</button>
+  </div>
+  <div class="readout" id="out">—</div>
+ </div>
+
+ <script type="module">
+  import Gallery, { createGallery } from "../src/index.js";
+
+  const grid = Gallery.create(document.getElementById("grid"), {
+    columns: 4, aspectRatio: 1, gap: 10, thumbnails: true,
+  });
+
+  // Layout left entirely to your own CSS; only the lightbox is ours.
+  createGallery(document.getElementById("bare"), { layout: "none", zoom: true });
+
+  // The package does not auto-run on import — call it yourself.
+  Gallery.autoInit();
+
+  document.getElementById("open").onclick = () => grid.open(0);
+  document.getElementById("next").onclick = () => grid.next();
+  document.getElementById("close").onclick = () => grid.close();
+  document.getElementById("destroy").onclick = () => grid.destroy();
+
+  const out = document.getElementById("out");
+  grid.on("change", (e) => (out.dataset.last = `${e.index}: ${e.item.caption}`));
+  setInterval(() => {
+    const g = Gallery.get(document.getElementById("grid"));
+    out.textContent = g
+      ? `items ${g.length} · open ${g.isOpen} · index ${g.index} · last change ${out.dataset.last || "—"}`
+      : "destroyed — reload to rebuild";
+  }, 150);
+ </script>
+</body></html>

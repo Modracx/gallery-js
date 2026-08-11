@@ -1,0 +1,70 @@
+{
+  "name": "@modracx/gallery-js",
+  "version": "1.0.0",
+  "description": "Lightweight image gallery for web pages \u2014 responsive thumbnail grid or masonry, plus an accessible lightbox with zoom, swipe, keyboard and focus trapping. Zero dependencies.",
+  "type": "module",
+  "sideEffects": [
+    "./src/jquery.js"
+  ],
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./jquery": {
+      "types": "./src/jquery.d.ts",
+      "default": "./src/jquery.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "gallery",
+    "lightbox",
+    "image-gallery",
+    "photo-gallery",
+    "masonry",
+    "grid",
+    "zoom",
+    "swipe",
+    "modal",
+    "photoswipe-alternative",
+    "accessibility",
+    "focus-trap",
+    "jquery-plugin",
+    "browser",
+    "zero-dependency"
+  ],
+  "author": "Kenneth D'silva (Modracx)",
+  "license": "MIT",
+  "homepage": "https://github.com/Modracx/gallery-js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Modracx/gallery-js.git",
+    "directory": "gallery-js"
+  },
+  "bugs": {
+    "url": "https://github.com/Modracx/gallery-js/issues"
+  },
+  "peerDependencies": {
+    "jquery": ">=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "jquery": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
